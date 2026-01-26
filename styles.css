@@ -1,0 +1,10 @@
+body {
+    /* This adds space at the bottom equal to the height of the Android buttons */
+    padding-bottom: env(safe-area-inset-bottom);
+    
+    /* If your buttons are 'fixed' to the bottom, apply it to the button container instead */
+}
+
+.your-bottom-buttons-class {
+    margin-bottom: env(safe-area-inset-bottom);
+}
