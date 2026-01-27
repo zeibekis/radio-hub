@@ -5,177 +5,80 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>Red Radio Network</title>
     <style>
-        :root {
-            --bg-color: #ffffff;
-            --footer-bg: #2d3237;
-            --text-main: #333333;
-            --accent: #ff0000;
-        }
-
-        body {
-            font-family: 'Helvetica Neue', Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: var(--bg-color);
-            color: var(--text-main);
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-            overflow-x: hidden;
-        }
-
-        nav {
-            display: flex;
-            justify-content: center;
-            padding: 15px 0;
-            border-bottom: 1px solid #eee;
-            gap: 20px;
-            font-size: 14px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        nav a {
-            text-decoration: none;
-            color: #666;
-            font-weight: 500;
-            transition: color 0.3s;
-        }
-
+        :root { --bg: #ffffff; --footer-bg: #2d3237; --text: #333333; --accent: #ff0000; }
+        body { font-family: 'Helvetica Neue', Arial, sans-serif; margin: 0; background: var(--bg); color: var(--text); display: flex; flex-direction: column; min-height: 100vh; overflow-x: hidden; }
+        
+        /* Navigation */
+        nav { display: flex; justify-content: center; padding: 15px 0; border-bottom: 1px solid #eee; gap: 20px; text-transform: uppercase; font-size: 14px; }
+        nav a { text-decoration: none; color: #666; font-weight: 500; cursor: pointer; }
         nav a:hover { color: var(--accent); }
 
-        .hero {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 20px 20px calc(120px + env(safe-area-inset-bottom)) 20px;
-        }
+        /* Content Areas */
+        .hero { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 20px 20px 120px 20px; }
+        .page-content { display: none; width: 100%; max-width: 900px; flex-direction: column; align-items: center; }
+        .active { display: flex; } /* Only the active page shows */
 
-        .logo {
-            max-width: 200px;
-            width: 100%;
-            height: auto;
-            margin-bottom: 20px;
-            display: block;
-        }
+        .logo { max-width: 200px; width: 100%; height: auto; margin-bottom: 20px; }
+        
+        /* Station Grid */
+        .station-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; width: 100%; }
+        @media (min-width: 600px) { .station-grid { grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); } }
+        .station-card { text-align: center; padding: 15px; border: 1px solid #eee; border-radius: 8px; cursor: pointer; background: #fff; transition: 0.3s; }
+        .station-card:hover { border-color: var(--accent); transform: translateY(-3px); }
 
-        .social-links {
-            display: flex;
-            gap: 15px;
-            margin-bottom: 25px;
-        }
+        /* Program Styling */
+        .program-container { width: 100%; max-width: 600px; text-align: left; }
+        .day { background: #f9f9f9; padding: 10px; font-weight: bold; border-left: 4px solid var(--accent); margin-top: 15px; }
+        .show { display: flex; justify-content: space-between; padding: 10px; border-bottom: 1px solid #eee; }
 
-        .social-links img {
-            width: 35px;
-            height: auto;
-            transition: transform 0.2s;
-        }
-
-        .social-links img:hover { transform: scale(1.1); }
-
-        .station-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr); 
-            gap: 10px;
-            max-width: 900px;
-            width: 100%;
-        }
-
-        @media (min-width: 600px) {
-            .station-grid {
-                grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-            }
-        }
-
-        .station-card {
-            text-align: center;
-            padding: 10px;
-            border: 1px solid #eee;
-            border-radius: 8px;
-            cursor: pointer;
-            background: #fff;
-            transition: 0.3s;
-        }
-
-        .station-card:hover { border-color: var(--accent); box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
-
-        footer {
-            position: fixed;
-            bottom: 0;
-            width: 100%;
-            background-color: var(--footer-bg);
-            padding-bottom: env(safe-area-inset-bottom);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 -5px 10px rgba(0,0,0,0.1);
-            z-index: 1000;
-        }
-
-        .player-container {
-            width: 100%;
-            height: 100px;
-            display: flex;
-            justify-content: center;
-        }
-
-        iframe {
-            width: 100%;
-            max-width: 600px;
-            height: 100%;
-            border: 0;
-        }
+        /* Footer */
+        footer { position: fixed; bottom: 0; width: 100%; background: var(--footer-bg); height: 100px; display: flex; justify-content: center; align-items: center; z-index: 1000; padding-bottom: env(safe-area-inset-bottom); }
+        iframe { width: 100%; max-width: 600px; height: 100%; border: 0; }
     </style>
 </head>
 <body>
 
     <nav>
-        <a href="index.html">Home</a>
-        <a href="program.html">Program</a>
-        <a href="contact.html">Contact</a>
+        <a onclick="showPage('home')">Home</a>
+        <a onclick="showPage('program')">Program</a>
     </nav>
 
     <div class="hero">
-        <img src="images.png" alt="Red Radio Logo" class="logo">
-        
-        <div class="social-links">
-            <a href="https://facebook.com/YOUR_PAGE" target="_blank">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg" alt="Facebook">
-            </a>
-            <a href="https://x.com/YOUR_ACCOUNT" target="_blank">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/c/ce/X_logo_2023.svg" alt="X">
-            </a>
+        <img src="images.png" alt="Logo" class="logo">
+
+        <div id="home" class="page-content active">
+            <div class="station-grid">
+                <div class="station-card" onclick="changeStation('red_jazz')"><h3>Red Jazz</h3><p>Smooth Jazz</p></div>
+                <div class="station-card" onclick="changeStation('red_rock')"><h3>Red Rock</h3><p>Classic Hits</p></div>
+                <div class="station-card" onclick="changeStation('red_house')"><h3>Red House</h3><p>Experimental</p></div>
+                <div class="station-card" onclick="changeStation('red_pop')"><h3>Red Pop</h3><p>Pop Hits</p></div>
+            </div>
         </div>
 
-        <div class="station-grid">
-            <div class="station-card" onclick="changeStation('red_jazz')">
-                <h3>Red Jazz</h3>
-                <p>Smooth Jazz</p>
-            </div>
-            <div class="station-card" onclick="changeStation('red_rock')">
-                <h3>Red Rock</h3>
-                <p>Classic Hits</p>
-            </div>
-            <div class="station-card" onclick="changeStation('red_house')">
-                <h3>Red House</h3>
-                <p>Experimental</p>
-            </div>
-            <div class="station-card" onclick="changeStation('red_pop')">
-                <h3>Red Pop</h3>
-                <p>Pop Hits</p>
+        <div id="program" class="page-content">
+            <h2>Weekly Schedule</h2>
+            <div class="program-container">
+                <div class="day">Monday - Friday</div>
+                <div class="show"><span>Morning Mix</span><strong>08:00</strong></div>
+                <div class="show"><span>Rock Hour</span><strong>12:00</strong></div>
+                <div class="day">Weekends</div>
+                <div class="show"><span>Non-stop Hits</span><strong>All Day</strong></div>
             </div>
         </div>
     </div>
 
     <footer>
-        <div class="player-container">
-            <iframe id="radio-iframe" src="https://redman78.duckdns.org/public/red_jazz/embed?theme=dark&autoplay=0&hide_streams=1&rounded=1&continuous=1" frameborder="0" allowtransparency="true"></iframe>
-        </div>
+        <iframe id="radio-iframe" src="https://redman78.duckdns.org/public/red_jazz/embed?theme=dark&autoplay=0&hide_streams=1&rounded=1&continuous=1"></iframe>
     </footer>
 
     <script>
+        // Switch pages without reloading
+        function showPage(pageId) {
+            document.querySelectorAll('.page-content').forEach(p => p.classList.remove('active'));
+            document.getElementById(pageId).classList.add('active');
+        }
+
+        // Change music without stopping
         function changeStation(mountName) {
             const iframe = document.getElementById('radio-iframe');
             iframe.src = `https://redman78.duckdns.org/public/${mountName}/embed?theme=dark&autoplay=1&hide_streams=1&rounded=1&continuous=1`;
