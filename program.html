@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Program - Red Radio Network</title>
+    <style>
+        :root {
+            --bg-color: #ffffff;
+            --footer-bg: #2d3237;
+            --text-main: #333333;
+            --accent: #ff0000;
+        }
+
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        nav {
+            display: flex;
+            justify-content: center;
+            padding: 15px 0;
+            border-bottom: 1px solid #eee;
+            gap: 20px;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #666;
+            font-weight: 500;
+        }
+
+        nav a:hover { color: var(--accent); }
+
+        .hero {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            padding: 40px 20px calc(120px + env(safe-area-inset-bottom)) 20px;
+        }
+
+        .logo {
+            max-width: 150px;
+            width: 100%;
+            height: auto;
+            margin-bottom: 20px;
+        }
+
+        h1 { font-size: 24px; text-transform: uppercase; margin-bottom: 30px; }
+
+        /* Program List Styling */
+        .program-container {
+            max-width: 600px;
+            width: 100%;
+            text-align: left;
+        }
+
+        .program-day {
+            background: #f9f9f9;
+            padding: 10px 15px;
+            font-weight: bold;
+            border-left: 4px solid var(--accent);
+            margin-bottom: 10px;
+        }
+
+        .program-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 15px;
+            border-bottom: 1px solid #eee;
+            font-size: 14px;
+        }
+
+        .time { font-weight: bold; color: var(--accent); }
+
+        footer {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            background-color: var(--footer-bg);
+            padding-bottom: env(safe-area-inset-bottom);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+
+        .player-container {
+            width: 100%;
+            height: 100px;
+            display: flex;
+            justify-content: center;
+        }
+
+        iframe { width: 100%; max-width: 600px; height: 100%; border: 0; }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="program.html">Program</a>
+        <a href="contact.html">Contact</a>
+    </nav>
+
+    <div class="hero">
+        <img src="images.png" alt="Red Radio Logo" class="logo">
+        <h1>Weekly Schedule</h1>
+        
+        <div class="program-container">
+            <div class="program-day">Monday - Friday</div>
+            <div class="program-item">
+                <span>Morning Jazz Mix</span>
+                <span class="time">08:00 - 12:00</span>
+            </div>
+            <div class="program-item">
+                <span>Rock Classics Hour</span>
+                <span class="time">12:00 - 14:00</span>
+            </div>
+            <div class="program-item">
+                <span>Experimental House Sessions</span>
+                <span class="time">20:00 - 22:00</span>
+            </div>
+
+            <div class="program-day">Saturday - Sunday</div>
+            <div class="program-item">
+                <span>Weekend Pop Hits</span>
+                <span class="time">10:00 - 18:00</span>
+            </div>
+            <div class="program-item">
+                <span>Late Night Chill</span>
+                <span class="time">22:00 - 02:00</span>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="player-container">
+            <iframe id="radio-iframe" src="https://redman78.duckdns.org/public/red_jazz/embed?theme=dark&autoplay=0&hide_streams=1&rounded=1&continuous=1" frameborder="0" allowtransparency="true"></iframe>
+        </div>
+    </footer>
+
+</body>
+</html>

@@ -2,7 +2,7 @@
 <html lang="el">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>Red Radio Network</title>
     <style>
         :root {
@@ -21,9 +21,9 @@
             display: flex;
             flex-direction: column;
             min-height: 100vh;
+            overflow-x: hidden;
         }
 
-        /* Top Navigation */
         nav {
             display: flex;
             justify-content: center;
@@ -39,20 +39,23 @@
             text-decoration: none;
             color: #666;
             font-weight: 500;
+            transition: color 0.3s;
         }
 
-        /* Center Content - Optimized Padding to show cards */
+        nav a:hover { color: var(--accent); }
+
         .hero {
             flex: 1;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            padding: 20px 20px 120px 20px; /* Large bottom padding so cards clear the footer */
+            padding: 20px 20px calc(120px + env(safe-area-inset-bottom)) 20px;
         }
 
         .logo {
-            max-width: 250px; /* Slightly smaller for better fit */
+            max-width: 200px;
+            width: 100%;
             height: auto;
             margin-bottom: 20px;
             display: block;
@@ -65,57 +68,45 @@
         }
 
         .social-links img {
-            width: 40px;
+            width: 35px;
             height: auto;
-            transition: transform 0.2s ease;
+            transition: transform 0.2s;
         }
 
-        .social-links img:hover {
-            transform: scale(1.1);
-        }
+        .social-links img:hover { transform: scale(1.1); }
 
-        /* Station Selection Grid */
         .station-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-            gap: 15px;
+            grid-template-columns: repeat(2, 1fr); 
+            gap: 10px;
             max-width: 900px;
             width: 100%;
         }
 
+        @media (min-width: 600px) {
+            .station-grid {
+                grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            }
+        }
+
         .station-card {
             text-align: center;
-            padding: 15px;
+            padding: 10px;
             border: 1px solid #eee;
             border-radius: 8px;
             cursor: pointer;
-            transition: 0.3s;
             background: #fff;
+            transition: 0.3s;
         }
 
-        .station-card:hover {
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-            border-color: var(--accent);
-        }
+        .station-card:hover { border-color: var(--accent); box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
 
-        .station-card h3 {
-            margin: 10px 0;
-            font-size: 16px;
-        }
-
-        .station-card p {
-            font-size: 12px;
-            color: #777;
-            margin: 0;
-        }
-
-        /* Compact Sticky Footer Player */
         footer {
             position: fixed;
             bottom: 0;
             width: 100%;
             background-color: var(--footer-bg);
-            height: 100px; /* Smaller height to keep stations visible */
+            padding-bottom: env(safe-area-inset-bottom);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -125,7 +116,7 @@
 
         .player-container {
             width: 100%;
-            max-width: 1200px;
+            height: 100px;
             display: flex;
             justify-content: center;
         }
@@ -133,7 +124,7 @@
         iframe {
             width: 100%;
             max-width: 600px;
-            height: 100px; /* Match footer height */
+            height: 100%;
             border: 0;
         }
     </style>
@@ -141,10 +132,9 @@
 <body>
 
     <nav>
-        <a href="#">Home</a>
-        <a href="#">Program</a>
-        <a href="#">Producers</a>
-        <a href="#">Contact</a>
+        <a href="index.html">Home</a>
+        <a href="program.html">Program</a>
+        <a href="contact.html">Contact</a>
     </nav>
 
     <div class="hero">
@@ -162,7 +152,7 @@
         <div class="station-grid">
             <div class="station-card" onclick="changeStation('red_jazz')">
                 <h3>Red Jazz</h3>
-                <p>Smooth Jazz 24/7</p>
+                <p>Smooth Jazz</p>
             </div>
             <div class="station-card" onclick="changeStation('red_rock')">
                 <h3>Red Rock</h3>
@@ -188,10 +178,8 @@
     <script>
         function changeStation(mountName) {
             const iframe = document.getElementById('radio-iframe');
-            // Logic to swap the source and start playing immediately
             iframe.src = `https://redman78.duckdns.org/public/${mountName}/embed?theme=dark&autoplay=1&hide_streams=1&rounded=1&continuous=1`;
         }
     </script>
-
 </body>
 </html>
