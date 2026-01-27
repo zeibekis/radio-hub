@@ -9,31 +9,57 @@
         body { font-family: 'Helvetica Neue', Arial, sans-serif; margin: 0; background: var(--bg); color: var(--text); display: flex; flex-direction: column; min-height: 100vh; overflow-x: hidden; }
         
         /* Navigation */
-        nav { display: flex; justify-content: center; padding: 15px 0; border-bottom: 1px solid #eee; gap: 20px; text-transform: uppercase; font-size: 14px; }
-        nav a { text-decoration: none; color: #666; font-weight: 500; cursor: pointer; }
+        nav { display: flex; justify-content: center; flex-wrap: wrap; padding: 15px 0; border-bottom: 1px solid #eee; gap: 15px; text-transform: uppercase; font-size: 13px; }
+        nav a { text-decoration: none; color: #666; font-weight: 500; cursor: pointer; transition: 0.3s; }
         nav a:hover { color: var(--accent); }
 
-        /* Content Areas */
-        .hero { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 20px 20px 120px 20px; }
-        .page-content { display: none; width: 100%; max-width: 900px; flex-direction: column; align-items: center; }
-        .active { display: flex; } /* Only the active page shows */
+        /* Content Transitions */
+        .hero { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: flex-start; padding: 20px 20px 160px 20px; }
+        .page-content { display: none; width: 100%; max-width: 900px; flex-direction: column; align-items: center; animation: fadeIn 0.4s; }
+        .active { display: flex; } 
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
-        .logo { max-width: 200px; width: 100%; height: auto; margin-bottom: 20px; }
+        .logo { max-width: 180px; width: 100%; height: auto; margin-bottom: 20px; cursor: pointer; }
         
-        /* Station Grid */
-        .station-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; width: 100%; }
-        @media (min-width: 600px) { .station-grid { grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); } }
-        .station-card { text-align: center; padding: 15px; border: 1px solid #eee; border-radius: 8px; cursor: pointer; background: #fff; transition: 0.3s; }
-        .station-card:hover { border-color: var(--accent); transform: translateY(-3px); }
+        /* Grid Layouts */
+        .station-grid, .wallpaper-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; width: 100%; }
+        @media (min-width: 600px) { .station-grid, .wallpaper-grid { grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); } }
+        
+        .card { text-align: center; padding: 15px; border: 1px solid #eee; border-radius: 8px; cursor: pointer; background: #fff; transition: 0.3s; }
+        .card:hover { border-color: var(--accent); transform: translateY(-3px); }
 
-        /* Program Styling */
-        .program-container { width: 100%; max-width: 600px; text-align: left; }
-        .day { background: #f9f9f9; padding: 10px; font-weight: bold; border-left: 4px solid var(--accent); margin-top: 15px; }
-        .show { display: flex; justify-content: space-between; padding: 10px; border-bottom: 1px solid #eee; }
+        /* Info Boxes */
+        .info-box { width: 100%; max-width: 600px; text-align: left; }
+        .day-header { background: #f9f9f9; padding: 10px; font-weight: bold; border-left: 4px solid var(--accent); margin-top: 15px; }
+        .row { display: flex; justify-content: space-between; padding: 10px; border-bottom: 1px solid #eee; }
 
-        /* Footer */
-        footer { position: fixed; bottom: 0; width: 100%; background: var(--footer-bg); height: 100px; display: flex; justify-content: center; align-items: center; z-index: 1000; padding-bottom: env(safe-area-inset-bottom); }
-        iframe { width: 100%; max-width: 600px; height: 100%; border: 0; }
+        /* --- THE FIXED FOOTER PLAYER --- */
+        footer { 
+            position: fixed; 
+            bottom: 0; 
+            width: 100%; 
+            background: var(--footer-bg); 
+            height: 140px; /* Increased height to show all controls */
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            z-index: 1000; 
+            box-shadow: 0 -5px 15px rgba(0,0,0,0.2);
+            padding-bottom: env(safe-area-inset-bottom);
+        }
+        
+        .player-wrapper {
+            width: 100%;
+            max-width: 800px; /* Wider for better control layout */
+            height: 100%;
+        }
+
+        iframe { 
+            width: 100%; 
+            height: 100%; 
+            border: 0; 
+            overflow: hidden; 
+        }
     </style>
 </head>
 <body>
@@ -41,44 +67,72 @@
     <nav>
         <a onclick="showPage('home')">Home</a>
         <a onclick="showPage('program')">Program</a>
+        <a onclick="showPage('producers')">Producers</a>
+        <a onclick="showPage('wallpaper')">Wallpaper</a>
+        <a onclick="showPage('contact')">Contact</a>
     </nav>
 
     <div class="hero">
-        <img src="images.png" alt="Logo" class="logo">
+        <img src="images.png" alt="Logo" class="logo" onclick="showPage('home')">
 
         <div id="home" class="page-content active">
             <div class="station-grid">
-                <div class="station-card" onclick="changeStation('red_jazz')"><h3>Red Jazz</h3><p>Smooth Jazz</p></div>
-                <div class="station-card" onclick="changeStation('red_rock')"><h3>Red Rock</h3><p>Classic Hits</p></div>
-                <div class="station-card" onclick="changeStation('red_house')"><h3>Red House</h3><p>Experimental</p></div>
-                <div class="station-card" onclick="changeStation('red_pop')"><h3>Red Pop</h3><p>Pop Hits</p></div>
+                <div class="card" onclick="changeStation('red_jazz')"><h3>Red Jazz</h3><p>Smooth Jazz</p></div>
+                <div class="card" onclick="changeStation('red_rock')"><h3>Red Rock</h3><p>Classic Hits</p></div>
+                <div class="card" onclick="changeStation('red_house')"><h3>Red House</h3><p>Experimental</p></div>
+                <div class="card" onclick="changeStation('red_pop')"><h3>Red Pop</h3><p>Pop Hits</p></div>
             </div>
         </div>
 
         <div id="program" class="page-content">
             <h2>Weekly Schedule</h2>
-            <div class="program-container">
-                <div class="day">Monday - Friday</div>
-                <div class="show"><span>Morning Mix</span><strong>08:00</strong></div>
-                <div class="show"><span>Rock Hour</span><strong>12:00</strong></div>
-                <div class="day">Weekends</div>
-                <div class="show"><span>Non-stop Hits</span><strong>All Day</strong></div>
+            <div class="info-box">
+                <div class="day-header">Monday - Friday</div>
+                <div class="row"><span>Morning Mix</span><strong>08:00</strong></div>
+                <div class="row"><span>Rock Hour</span><strong>12:00</strong></div>
+                <div class="day-header">Weekends</div>
+                <div class="row"><span>Non-stop Hits</span><strong>24/7</strong></div>
+            </div>
+        </div>
+
+        <div id="producers" class="page-content">
+            <h2>Our Producers</h2>
+            <div class="station-grid">
+                <div class="card"><h3>Nick</h3><p>Rock & Metal</p></div>
+                <div class="card"><h3>Guest DJ</h3><p>Electronic</p></div>
+            </div>
+        </div>
+
+        <div id="wallpaper" class="page-content">
+            <h2>Wallpapers</h2>
+            <div class="wallpaper-grid">
+                <div class="card"><h3>Desktop</h3><p>Download HD</p></div>
+                <div class="card"><h3>Mobile</h3><p>Download 4K</p></div>
+            </div>
+        </div>
+
+        <div id="contact" class="page-content">
+            <h2>Contact</h2>
+            <div class="info-box">
+                <div class="row"><span>Email:</span><strong>radio@redman78.gr</strong></div>
+                <div class="row"><span>Location:</span><strong>Kavala, Greece</strong></div>
             </div>
         </div>
     </div>
 
     <footer>
-        <iframe id="radio-iframe" src="https://redman78.duckdns.org/public/red_jazz/embed?theme=dark&autoplay=0&hide_streams=1&rounded=1&continuous=1"></iframe>
+        <div class="player-wrapper">
+            <iframe id="radio-iframe" src="https://redman78.duckdns.org/public/red_jazz/embed?theme=dark&autoplay=0&hide_streams=1&rounded=1&continuous=1"></iframe>
+        </div>
     </footer>
 
     <script>
-        // Switch pages without reloading
         function showPage(pageId) {
             document.querySelectorAll('.page-content').forEach(p => p.classList.remove('active'));
             document.getElementById(pageId).classList.add('active');
+            window.scrollTo(0, 0);
         }
 
-        // Change music without stopping
         function changeStation(mountName) {
             const iframe = document.getElementById('radio-iframe');
             iframe.src = `https://redman78.duckdns.org/public/${mountName}/embed?theme=dark&autoplay=1&hide_streams=1&rounded=1&continuous=1`;
