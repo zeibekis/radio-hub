@@ -3,62 +3,113 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>Red Radio Network</title>
+    <title>Red Radio Network | Cosmopolitan Mix</title>
     <style>
-        :root { --bg: #ffffff; --footer-bg: #2d3237; --text: #333333; --accent: #ff0000; }
-        body { font-family: 'Helvetica Neue', Arial, sans-serif; margin: 0; background: var(--bg); color: var(--text); display: flex; flex-direction: column; min-height: 100vh; overflow-x: hidden; }
-        
-        /* Navigation */
-        nav { display: flex; justify-content: center; flex-wrap: wrap; padding: 15px 0; border-bottom: 1px solid #eee; gap: 15px; text-transform: uppercase; font-size: 13px; }
-        nav a { text-decoration: none; color: #666; font-weight: 500; cursor: pointer; transition: 0.3s; }
-        nav a:hover { color: var(--accent); }
+        /* --- ZUCCA INSPIRED THEME --- */
+        :root { 
+            --bg: #0b0b0b; /* Deep black background */
+            --footer-bg: #151515; /* Slightly lighter for the player */
+            --text-main: #ffffff; 
+            --text-dim: #999999;
+            --accent: #ff0000; /* Your signature Red */
+            --card-bg: #1a1a1a;
+        }
 
-        /* Content Transitions */
-        .hero { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: flex-start; padding: 20px 20px 160px 20px; }
-        .page-content { display: none; width: 100%; max-width: 900px; flex-direction: column; align-items: center; animation: fadeIn 0.4s; }
+        body { 
+            font-family: 'Inter', 'Helvetica Neue', Arial, sans-serif; 
+            margin: 0; 
+            background: var(--bg); 
+            color: var(--text-main); 
+            display: flex; 
+            flex-direction: column; 
+            min-height: 100vh; 
+            overflow-x: hidden; 
+        }
+        
+        /* Premium Navigation */
+        nav { 
+            display: flex; 
+            justify-content: center; 
+            flex-wrap: wrap; 
+            padding: 25px 0; 
+            background: rgba(0,0,0,0.5);
+            backdrop-filter: blur(10px);
+            gap: 25px; 
+            text-transform: uppercase; 
+            font-size: 12px; 
+            letter-spacing: 2px;
+            border-bottom: 1px solid #222;
+        }
+        nav a { text-decoration: none; color: var(--text-dim); font-weight: 600; cursor: pointer; transition: 0.4s; }
+        nav a:hover { color: var(--text-main); }
+
+        /* Page Layout */
+        .hero { 
+            flex: 1; 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            justify-content: flex-start; 
+            padding: 40px 20px 180px 20px; /* Large bottom gap for the fixed player */
+        }
+        
+        .page-content { display: none; width: 100%; max-width: 1000px; flex-direction: column; align-items: center; animation: slideUp 0.5s ease-out; }
         .active { display: flex; } 
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        .logo { max-width: 180px; width: 100%; height: auto; margin-bottom: 20px; cursor: pointer; }
+        .logo { max-width: 220px; width: 100%; height: auto; margin-bottom: 40px; cursor: pointer; filter: drop-shadow(0 0 10px rgba(255,0,0,0.2)); }
         
-        /* Grid Layouts */
-        .station-grid, .wallpaper-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; width: 100%; }
-        @media (min-width: 600px) { .station-grid, .wallpaper-grid { grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); } }
+        /* Sleek Station Grid */
+        .station-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; width: 100%; }
+        @media (min-width: 768px) { .station-grid { grid-template-columns: repeat(4, 1fr); } }
         
-        .card { text-align: center; padding: 15px; border: 1px solid #eee; border-radius: 8px; cursor: pointer; background: #fff; transition: 0.3s; }
-        .card:hover { border-color: var(--accent); transform: translateY(-3px); }
+        .card { 
+            text-align: center; 
+            padding: 30px 15px; 
+            border: 1px solid #222; 
+            border-radius: 4px; /* Sharper, modern corners */
+            cursor: pointer; 
+            background: var(--card-bg); 
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
+        }
+        .card:hover { border-color: var(--accent); background: #222; transform: scale(1.05); }
+        .card h3 { margin: 0 0 10px 0; letter-spacing: 1px; font-size: 18px; color: var(--text-main); }
+        .card p { margin: 0; font-size: 11px; color: var(--text-dim); text-transform: uppercase; letter-spacing: 1px; }
 
-        /* Info Boxes */
-        .info-box { width: 100%; max-width: 600px; text-align: left; }
-        .day-header { background: #f9f9f9; padding: 10px; font-weight: bold; border-left: 4px solid var(--accent); margin-top: 15px; }
-        .row { display: flex; justify-content: space-between; padding: 10px; border-bottom: 1px solid #eee; }
+        /* Schedule & Info Styling */
+        .info-box { width: 100%; max-width: 700px; }
+        .day-header { color: var(--accent); font-size: 14px; font-weight: bold; text-transform: uppercase; margin-top: 30px; border-bottom: 1px solid #222; padding-bottom: 5px; }
+        .row { display: flex; justify-content: space-between; padding: 15px 0; border-bottom: 1px solid #111; font-size: 14px; }
+        .row strong { color: var(--accent); }
 
-        /* --- THE FIXED FOOTER PLAYER --- */
+        /* --- ENHANCED FIXED PLAYER (ZUCCA STYLE) --- */
         footer { 
             position: fixed; 
             bottom: 0; 
             width: 100%; 
             background: var(--footer-bg); 
-            height: 140px; /* Increased height to show all controls */
+            height: 150px; /* Increased to fix your visibility issue */
             display: flex; 
             justify-content: center; 
             align-items: center; 
             z-index: 1000; 
-            box-shadow: 0 -5px 15px rgba(0,0,0,0.2);
+            border-top: 2px solid var(--accent);
             padding-bottom: env(safe-area-inset-bottom);
         }
         
         .player-wrapper {
-            width: 100%;
-            max-width: 800px; /* Wider for better control layout */
-            height: 100%;
+            width: 95%;
+            max-width: 900px;
+            height: 120px; /* Specifically sized for AzuraCast controls */
+            overflow: hidden;
+            background: transparent;
         }
 
         iframe { 
             width: 100%; 
             height: 100%; 
             border: 0; 
-            overflow: hidden; 
+            border-radius: 8px;
         }
     </style>
 </head>
@@ -66,56 +117,41 @@
 
     <nav>
         <a onclick="showPage('home')">Home</a>
-        <a onclick="showPage('program')">Program</a>
-        <a onclick="showPage('producers')">Producers</a>
-        <a onclick="showPage('wallpaper')">Wallpaper</a>
+        <a onclick="showPage('program')">Schedule</a>
+        <a onclick="showPage('producers')">Team</a>
+        <a onclick="showPage('wallpaper')">Downloads</a>
         <a onclick="showPage('contact')">Contact</a>
     </nav>
 
     <div class="hero">
-        <img src="images.png" alt="Logo" class="logo" onclick="showPage('home')">
+        <img src="images.png" alt="Red Radio" class="logo" onclick="showPage('home')">
 
         <div id="home" class="page-content active">
             <div class="station-grid">
-                <div class="card" onclick="changeStation('red_jazz')"><h3>Red Jazz</h3><p>Smooth Jazz</p></div>
-                <div class="card" onclick="changeStation('red_rock')"><h3>Red Rock</h3><p>Classic Hits</p></div>
-                <div class="card" onclick="changeStation('red_house')"><h3>Red House</h3><p>Experimental</p></div>
-                <div class="card" onclick="changeStation('red_pop')"><h3>Red Pop</h3><p>Pop Hits</p></div>
+                <div class="card" onclick="changeStation('red_jazz')"><h3>RED JAZZ</h3><p>Smooth Cosmopolitan</p></div>
+                <div class="card" onclick="changeStation('red_rock')"><h3>RED ROCK</h3><p>Classic Icons</p></div>
+                <div class="card" onclick="changeStation('red_house')"><h3>RED HOUSE</h3><p>Underground Mix</p></div>
+                <div class="card" onclick="changeStation('red_pop')"><h3>RED POP</h3><p>Global Hits</p></div>
             </div>
         </div>
 
         <div id="program" class="page-content">
-            <h2>Weekly Schedule</h2>
+            <h2 style="letter-spacing: 4px;">BROADCAST SCHEDULE</h2>
             <div class="info-box">
-                <div class="day-header">Monday - Friday</div>
-                <div class="row"><span>Morning Mix</span><strong>08:00</strong></div>
-                <div class="row"><span>Rock Hour</span><strong>12:00</strong></div>
-                <div class="day-header">Weekends</div>
-                <div class="row"><span>Non-stop Hits</span><strong>24/7</strong></div>
-            </div>
-        </div>
-
-        <div id="producers" class="page-content">
-            <h2>Our Producers</h2>
-            <div class="station-grid">
-                <div class="card"><h3>Nick</h3><p>Rock & Metal</p></div>
-                <div class="card"><h3>Guest DJ</h3><p>Electronic</p></div>
-            </div>
-        </div>
-
-        <div id="wallpaper" class="page-content">
-            <h2>Wallpapers</h2>
-            <div class="wallpaper-grid">
-                <div class="card"><h3>Desktop</h3><p>Download HD</p></div>
-                <div class="card"><h3>Mobile</h3><p>Download 4K</p></div>
+                <div class="day-header">Mon — Fri</div>
+                <div class="row"><span>Cosmopolitan Morning</span><strong>08:00</strong></div>
+                <div class="row"><span>Afternoon Sessions</span><strong>14:30</strong></div>
+                <div class="day-header">Sat — Sun</div>
+                <div class="row"><span>Exclusive Weekend Set</span><strong>20:30</strong></div>
             </div>
         </div>
 
         <div id="contact" class="page-content">
-            <h2>Contact</h2>
+            <h2 style="letter-spacing: 4px;">GET IN TOUCH</h2>
             <div class="info-box">
-                <div class="row"><span>Email:</span><strong>radio@redman78.gr</strong></div>
-                <div class="row"><span>Location:</span><strong>Kavala, Greece</strong></div>
+                <div class="row"><span>Studio Email</span><strong>radio@redman78.gr</strong></div>
+                <div class="row"><span>General Tel</span><strong>+30 2510 XXX XXX</strong></div>
+                <div class="row"><span>Headquarters</span><strong>Kavala, Greece</strong></div>
             </div>
         </div>
     </div>
@@ -127,12 +163,17 @@
     </footer>
 
     <script>
+        // Page Switching Logic (Uninterrupted Music)
         function showPage(pageId) {
             document.querySelectorAll('.page-content').forEach(p => p.classList.remove('active'));
-            document.getElementById(pageId).classList.add('active');
-            window.scrollTo(0, 0);
+            const target = document.getElementById(pageId);
+            if(target) {
+                target.classList.add('active');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
         }
 
+        // Station Changing Logic
         function changeStation(mountName) {
             const iframe = document.getElementById('radio-iframe');
             iframe.src = `https://redman78.duckdns.org/public/${mountName}/embed?theme=dark&autoplay=1&hide_streams=1&rounded=1&continuous=1`;
