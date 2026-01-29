@@ -46,10 +46,9 @@
             display: flex; 
             flex-direction: column; 
             align-items: center; 
-            padding: 60px 20px 180px 20px; 
+            padding: 60px 20px 200px 20px; 
         }
         
-        /* TEXT LOGO STYLE (Zucca Inspired) */
         .text-logo {
             font-size: 42px;
             font-weight: 900;
@@ -66,7 +65,7 @@
         .active { display: flex; } 
         @keyframes slideUp { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
 
-        .station-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; width: 100%; }
+        .station-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; width: 100%; margin-bottom: 40px; }
         @media (min-width: 768px) { .station-grid { grid-template-columns: repeat(4, 1fr); } }
         
         .card { 
@@ -82,7 +81,36 @@
         .card h3 { margin: 0 0 10px 0; letter-spacing: 2px; font-size: 16px; }
         .card p { margin: 0; font-size: 10px; color: var(--text-dim); text-transform: uppercase; letter-spacing: 1px; }
 
-        /* Footer Player - Fixed Visibility */
+        /* --- SOCIAL ICONS SECTION --- */
+        .social-footer {
+            margin-top: 40px;
+            text-align: center;
+        }
+        .social-footer h4 {
+            font-size: 10px;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: var(--text-dim);
+            margin-bottom: 20px;
+        }
+        .social-icons-wrap {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+        }
+        .social-icons-wrap a img {
+            width: 30px;
+            height: 30px;
+            filter: grayscale(1) invert(1); /* Makes them white to match Zucca style */
+            transition: 0.3s;
+            opacity: 0.7;
+        }
+        .social-icons-wrap a img:hover {
+            filter: grayscale(0) invert(0); /* Returns to color on hover */
+            opacity: 1;
+            transform: scale(1.1);
+        }
+
         footer { 
             position: fixed; 
             bottom: 0; 
@@ -127,6 +155,21 @@
                 <div class="card" onclick="changeStation('red_rock')"><h3>RED ROCK</h3><p>Classic Icons</p></div>
                 <div class="card" onclick="changeStation('red_house')"><h3>RED HOUSE</h3><p>Club Sessions</p></div>
                 <div class="card" onclick="changeStation('red_pop')"><h3>RED POP</h3><p>Global Hits</p></div>
+            </div>
+
+            <div class="social-footer">
+                <h4>Connect With Us</h4>
+                <div class="social-icons-wrap">
+                    <a href="https://facebook.com/YOUR_PAGE" target="_blank">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg" alt="Facebook">
+                    </a>
+                    <a href="https://instagram.com/YOUR_PAGE" target="_blank">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/e/e7/Instagram_logo_2016.svg" alt="Instagram">
+                    </a>
+                    <a href="https://x.com/YOUR_ACCOUNT" target="_blank">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/c/ce/X_logo_2023.svg" alt="X">
+                    </a>
+                </div>
             </div>
         </div>
 
