@@ -3,15 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>Red Radio Network | Cosmopolitan Mix</title>
+    <title>RED RADIO | Global Network</title>
     <style>
-        /* --- ZUCCA INSPIRED THEME --- */
         :root { 
-            --bg: #0b0b0b; /* Deep black background */
-            --footer-bg: #151515; /* Slightly lighter for the player */
+            --bg: #0b0b0b; 
+            --footer-bg: #151515; 
             --text-main: #ffffff; 
             --text-dim: #999999;
-            --accent: #ff0000; /* Your signature Red */
+            --accent: #ff0000; 
             --card-bg: #1a1a1a;
         }
 
@@ -26,91 +25,86 @@
             overflow-x: hidden; 
         }
         
-        /* Premium Navigation */
         nav { 
             display: flex; 
             justify-content: center; 
             flex-wrap: wrap; 
             padding: 25px 0; 
-            background: rgba(0,0,0,0.5);
+            background: rgba(0,0,0,0.8);
             backdrop-filter: blur(10px);
             gap: 25px; 
             text-transform: uppercase; 
-            font-size: 12px; 
+            font-size: 11px; 
             letter-spacing: 2px;
             border-bottom: 1px solid #222;
         }
         nav a { text-decoration: none; color: var(--text-dim); font-weight: 600; cursor: pointer; transition: 0.4s; }
-        nav a:hover { color: var(--text-main); }
+        nav a:hover { color: var(--accent); }
 
-        /* Page Layout */
         .hero { 
             flex: 1; 
             display: flex; 
             flex-direction: column; 
             align-items: center; 
-            justify-content: flex-start; 
-            padding: 40px 20px 180px 20px; /* Large bottom gap for the fixed player */
+            padding: 60px 20px 180px 20px; 
         }
         
+        /* TEXT LOGO STYLE (Zucca Inspired) */
+        .text-logo {
+            font-size: 42px;
+            font-weight: 900;
+            letter-spacing: 12px;
+            text-transform: uppercase;
+            margin-bottom: 40px;
+            cursor: pointer;
+            text-align: center;
+            line-height: 1;
+        }
+        .text-logo span { color: var(--accent); }
+
         .page-content { display: none; width: 100%; max-width: 1000px; flex-direction: column; align-items: center; animation: slideUp 0.5s ease-out; }
         .active { display: flex; } 
-        @keyframes slideUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
 
-        .logo { max-width: 220px; width: 100%; height: auto; margin-bottom: 40px; cursor: pointer; filter: drop-shadow(0 0 10px rgba(255,0,0,0.2)); }
-        
-        /* Sleek Station Grid */
         .station-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; width: 100%; }
         @media (min-width: 768px) { .station-grid { grid-template-columns: repeat(4, 1fr); } }
         
         .card { 
             text-align: center; 
-            padding: 30px 15px; 
+            padding: 35px 15px; 
             border: 1px solid #222; 
-            border-radius: 4px; /* Sharper, modern corners */
+            border-radius: 2px; 
             cursor: pointer; 
             background: var(--card-bg); 
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
+            transition: 0.3s ease; 
         }
-        .card:hover { border-color: var(--accent); background: #222; transform: scale(1.05); }
-        .card h3 { margin: 0 0 10px 0; letter-spacing: 1px; font-size: 18px; color: var(--text-main); }
-        .card p { margin: 0; font-size: 11px; color: var(--text-dim); text-transform: uppercase; letter-spacing: 1px; }
+        .card:hover { border-color: var(--accent); background: #222; transform: translateY(-5px); }
+        .card h3 { margin: 0 0 10px 0; letter-spacing: 2px; font-size: 16px; }
+        .card p { margin: 0; font-size: 10px; color: var(--text-dim); text-transform: uppercase; letter-spacing: 1px; }
 
-        /* Schedule & Info Styling */
-        .info-box { width: 100%; max-width: 700px; }
-        .day-header { color: var(--accent); font-size: 14px; font-weight: bold; text-transform: uppercase; margin-top: 30px; border-bottom: 1px solid #222; padding-bottom: 5px; }
-        .row { display: flex; justify-content: space-between; padding: 15px 0; border-bottom: 1px solid #111; font-size: 14px; }
-        .row strong { color: var(--accent); }
-
-        /* --- ENHANCED FIXED PLAYER (ZUCCA STYLE) --- */
+        /* Footer Player - Fixed Visibility */
         footer { 
             position: fixed; 
             bottom: 0; 
             width: 100%; 
             background: var(--footer-bg); 
-            height: 150px; /* Increased to fix your visibility issue */
+            height: 150px; 
             display: flex; 
             justify-content: center; 
             align-items: center; 
             z-index: 1000; 
-            border-top: 2px solid var(--accent);
+            border-top: 1px solid #333;
             padding-bottom: env(safe-area-inset-bottom);
         }
         
         .player-wrapper {
             width: 95%;
-            max-width: 900px;
-            height: 120px; /* Specifically sized for AzuraCast controls */
+            max-width: 850px;
+            height: 125px; 
             overflow: hidden;
-            background: transparent;
         }
 
-        iframe { 
-            width: 100%; 
-            height: 100%; 
-            border: 0; 
-            border-radius: 8px;
-        }
+        iframe { width: 100%; height: 100%; border: 0; }
     </style>
 </head>
 <body>
@@ -119,40 +113,31 @@
         <a onclick="showPage('home')">Home</a>
         <a onclick="showPage('program')">Schedule</a>
         <a onclick="showPage('producers')">Team</a>
-        <a onclick="showPage('wallpaper')">Downloads</a>
         <a onclick="showPage('contact')">Contact</a>
     </nav>
 
     <div class="hero">
-        <img src="images.png" alt="Red Radio" class="logo" onclick="showPage('home')">
+        <div class="text-logo" onclick="showPage('home')">
+            <span>RED</span> RADIO
+        </div>
 
         <div id="home" class="page-content active">
             <div class="station-grid">
-                <div class="card" onclick="changeStation('red_jazz')"><h3>RED JAZZ</h3><p>Smooth Cosmopolitan</p></div>
+                <div class="card" onclick="changeStation('red_jazz')"><h3>RED JAZZ</h3><p>Cosmopolitan Jazz</p></div>
                 <div class="card" onclick="changeStation('red_rock')"><h3>RED ROCK</h3><p>Classic Icons</p></div>
-                <div class="card" onclick="changeStation('red_house')"><h3>RED HOUSE</h3><p>Underground Mix</p></div>
+                <div class="card" onclick="changeStation('red_house')"><h3>RED HOUSE</h3><p>Club Sessions</p></div>
                 <div class="card" onclick="changeStation('red_pop')"><h3>RED POP</h3><p>Global Hits</p></div>
             </div>
         </div>
 
         <div id="program" class="page-content">
-            <h2 style="letter-spacing: 4px;">BROADCAST SCHEDULE</h2>
-            <div class="info-box">
-                <div class="day-header">Mon — Fri</div>
-                <div class="row"><span>Cosmopolitan Morning</span><strong>08:00</strong></div>
-                <div class="row"><span>Afternoon Sessions</span><strong>14:30</strong></div>
-                <div class="day-header">Sat — Sun</div>
-                <div class="row"><span>Exclusive Weekend Set</span><strong>20:30</strong></div>
-            </div>
+            <h2 style="letter-spacing: 5px;">SCHEDULE</h2>
+            <p style="color: var(--text-dim);">Live Broadcasts from Kavala</p>
         </div>
 
         <div id="contact" class="page-content">
-            <h2 style="letter-spacing: 4px;">GET IN TOUCH</h2>
-            <div class="info-box">
-                <div class="row"><span>Studio Email</span><strong>radio@redman78.gr</strong></div>
-                <div class="row"><span>General Tel</span><strong>+30 2510 XXX XXX</strong></div>
-                <div class="row"><span>Headquarters</span><strong>Kavala, Greece</strong></div>
-            </div>
+            <h2 style="letter-spacing: 5px;">CONTACT</h2>
+            <p style="color: var(--accent);">radio@redman78.gr</p>
         </div>
     </div>
 
@@ -163,17 +148,12 @@
     </footer>
 
     <script>
-        // Page Switching Logic (Uninterrupted Music)
         function showPage(pageId) {
             document.querySelectorAll('.page-content').forEach(p => p.classList.remove('active'));
-            const target = document.getElementById(pageId);
-            if(target) {
-                target.classList.add('active');
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-            }
+            document.getElementById(pageId).classList.add('active');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        // Station Changing Logic
         function changeStation(mountName) {
             const iframe = document.getElementById('radio-iframe');
             iframe.src = `https://redman78.duckdns.org/public/${mountName}/embed?theme=dark&autoplay=1&hide_streams=1&rounded=1&continuous=1`;
